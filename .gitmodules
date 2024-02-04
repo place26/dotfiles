@@ -1,0 +1,143 @@
+[submodule "sublime-purescript-syntax"]
+    path = common/.config/bat/syntaxes/sublime-purescript-syntax
+    url = https://github.com/tellnobody1/sublime-purescript-syntax
+
+[submodule "sublime-snazzy"]
+    path = common/.config/bat/themes/sublime-snazzy
+    url = https://github.com/greggb/sublime-snazzy
+
+[submodule "vim-visual-multi"]
+    path = common/.vim/plugged/vim-visual-multi 
+    url = https://github.com/mg979/vim-visual-multi
+
+[submodule "vim-tmux-navigator"]
+    path = common/.vim/plugged/vim-tmux-navigator
+    url = https://github.com/christoomey/vim-tmux-navigator
+
+[submodule "vim-surround"]
+    path = common/.vim/plugged/vim-surround
+    url = https://github.com/tpope/vim-surround
+
+[submodule "vim-startify"]
+    path = common/.vim/plugged/vim-startify
+    url = https://github.com/mhinz/vim-startify 
+
+[submodule "vim-slash"]
+    path = common/.vim/plugged/vim-slash
+    url = https://github.com/junegunn/vim-slash
+
+[submodule "vim-markdown"]
+    path = common/.vim/plugged/vim-markdown
+    url = https://github.com/preservim/vim-markdown
+
+[submodule "vim-lastplace"]
+    path = common/.vim/plugged/vim-lastplace
+    url = https://github.com/farmergreg/vim-lastplace 
+
+[submodule "vim-gitgutter"]
+    path = common/.vim/plugged/vim-gitgutter
+    url = https://github.com/airblade/vim-gitgutter
+
+[submodule "vim-fugitive"]
+    path = common/.vim/plugged/vim-fugitive
+    url = https://github.com/tpope/vim-fugitive
+
+[submodule "vim-commentary"]
+    path = common/.vim/plugged/vim-commentary
+    url = https://github.com/tpope/vim-commentary
+
+[submodule "vim-airline-themes"]
+    path = common/.vim/plugged/vim-airline-themes
+    url = https://github.com/vim-airline/vim-airline-themes
+
+[submodule "vim-airline"]
+    path = common/.vim/plugged/vim-airline
+    url = https://github.com/vim-airline/vim-airline
+
+[submodule "nerdtree"]
+    path = common/.vim/plugged/nerdtree
+    url = https://github.com/preservim/nerdtree
+
+[submodule "limelight.vim"]
+    path = common/.vim/plugged/limelight.vim/
+    url = https://github.com/junegunn/limelight.vim
+
+[submodule "gv.vim"]
+    path = common/.vim/plugged/gv.vim
+    url = https://github.com/junegunn/gv.vim
+
+[submodule "goyo.vim"]
+    path = common/.vim/plugged/goyo.vim
+    url = https://github.com/junegunn/goyo.vim
+
+[submodule "fzf.vim"]
+    path = common/.vim/plugged/fzf.vim/
+    url = https://github.com/junegunn/fzf.vim
+
+[submodule "fzf"]
+    path = common/.vim/plugged/fzf
+    url = https://github.com/junegunn/fzf
+
+[submodule "catppuccin"]
+    path = common/.vim/plugged/catppuccin/
+    url = https://github.com/catppuccin/vim
+
+[submodule "CursorLineCurrentWindow"]
+    path = common/.vim/plugged/CursorLineCurrentWindow
+    url = https://github.com/vim-scripts/CursorLineCurrentWindow
+
+[submodule "AutoComplPop"]
+    path = common/.vim/plugged/AutoComplPop
+    url = https://github.com/vim-scripts/AutoComplPop
+
+[submodule "plug.vim"]
+    path = common/.vim/autoload/plug.vim
+    url = https://github.com/junegunn/vim-plug
+
+[submodule "zsh-syntax-highlighting"]
+    path = common/.config/zsh/zsh-syntax-highlighting
+    url = https://github.com/zsh-users/zsh-syntax-highlighting
+
+[submodule "zsh-autosuggestions"]
+    path = common/.config/zsh/zsh-autosuggestions
+    url = https://github.com/zsh-users/zsh-autosuggestions
+
+[submodule "zsh-autocomplete"]
+    path = common/.config/zsh/zsh-autocomplete
+    url = https://github.com/marlonrichert/zsh-autocomplete
+
+[submodule "vim-tmux-navigator"]
+    path = common/.config/tmux/plugins/vim-tmux-navigator
+    url = https://github.com/christoomey/vim-tmux-navigator
+
+[submodule "tpm"]
+    path = common/.config/tmux/plugins/tpm
+    url = https://github.com/tmux-plugins/tpm
+
+[submodule "tmux-yank"]
+    path = common/.config/tmux/plugins/tmux-yank
+    url = https://github.com/tmux-plugins/tmux-yank
+
+[submodule "tmux-themepack"]
+    path = common/.config/tmux/plugins/tmux-themepack
+    url = https://github.com/jimeh/tmux-themepack
+
+[submodule "tmux-sensible"]
+    path = common/.config/tmux/plugins/tmux-sensible
+    url = https://github.com/tmux-plugins/tmux-sensible
+
+[submodule "tmux-fzf"]
+    path = common/.config/tmux/plugins/tmux-fzf
+    url = https://github.com/sainnhe/tmux-fzf
+
+[submodule "tmux-resurrect"]
+    path = common/.config/tmux/plugins/tmux-resurrect
+    url = https://github.com/tmux-plugins/tmux-resurrect
+
+[submodule "tmux-continnum"]
+    path = common/.config/tmux/plugins/tmux-continuum
+    url = https://github.com/tmux-plugins/tmux-continuum
+
+[submodule "tmux-catppuccin"]
+    path = common/.config/tmux/plugins/tmux
+    url = https://github.com/catppuccin/tmux

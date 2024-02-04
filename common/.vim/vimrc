@@ -1,0 +1,358 @@
+" General Settings: {{{
+
+if has('termguicolors')
+    set termguicolors
+endif
+
+set nocompatible                                        " make vim more powerful
+filetype plugin indent on
+filetype plugin on
+syntax on
+set mouse=a                                             " support mouse
+set confirm                                             " ask before unsage action
+
+" ssh 사용시 발생할 수 있는 문제 예방
+set noswapfile nobackup                                 " don't use swap file
+
+" undo 관련된 설정
+if !isdirectory($HOME."/.vim")
+    call mkdir($HOME."/.vim", "", 0770)
+endif
+if !isdirectory($HOME."/.vim/undo-dir")
+    call mkdir($HOME."/.vim/undo-dir", "", 0700)
+endif
+set undodir=$HOME/.vim/undo-dir                         " undo-dir 설정
+set undofile
+
+set encoding=utf-8
+set clipboard=unnamed,unnamedplus                       " 외부 clipboard 이용
+set number relativenumber                               " with relativenumber, show current number
+
+set showcmd
+set noshowmode
+set wildmenu
+set wildmode=longest,list,full
+
+set smarttab tabstop=4 softtabstop=4 shiftwidth=4       " width of a tab character
+set smartindent
+set expandtab
+
+set ignorecase smartcase
+set incsearch hlsearch
+set gdefault
+set ruler laststatus=2 showcmd showmode
+set list listchars=trail:»,tab:»-
+set fillchars+=vert:\
+set wrap breakindent
+set title
+set backspace=indent,start,eol                           " <BS> 역할설정, eol 제외
+set scrolloff=8                                          " during scroll keep 3 lines be shown"
+set laststatus=2                                         " always show status line
+set cursorline                                           " highlight the line with a cursor
+set list
+set listchars=tab:▸\ ,trail:⋅,extends:>,precedes:<,eol:¬,nbsp:_
+
+" Disable cursor line highlighting in Insert mode
+augroup aug_cursor_line
+   au!
+   au InsertEnter * setlocal nocursorline
+   au InsertLeave * setlocal cursorline
+augroup END
+
+"}}}
+
+" Custom Key Mappings: {{{
+
+" Set <leader> key to <Space>
+nnoremap <Space> <Nop>
+let mapleader=" "
+let maplocalleader=" "
+
+" iPad를 위해 <ESC>를 키 매핑, 무척 편리함. set paste와 같이 쓸 경우 안됨.
+inoremap jk <ESC>
+
+" Terminal: i로 시작, exit로 빠져나옴
+nmap <leader>s <C-w>s<C-w>j:terminal<CR>
+nmap <leader>vs <C-w>v<C-w>l:terminal<CR>
+
+" }}}
+
+" AutoComplPop: keymapping {{{
+" 타이핑을 시작하면 자동으로 팝업메뉴가 떠서 선택할 수 있는 플러그인
+" Navigate the complete menu items like CTRL+n / CTRL+p would.
+inoremap <expr> <Down> pumvisible() ? "<C-n>" :"<Down>"
+inoremap <expr> <Up> pumvisible() ? "<C-p>" : "<Up>"
+
+" Select the complete menu item like CTRL+y would.
+inoremap <expr> <Right> pumvisible() ? "<C-y>" : "<Right>"
+inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
+
+" Cancel the complete menu item like CTRL+e would.
+inoremap <expr> <Left> pumvisible() ? "<C-e>" : "<Left>"
+
+" }}}
+
+" Plugins Install: {{{
+
+call plug#begin()
+
+    " Vim Make Pretty:
+    Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/limelight.vim'
+
+    " Vim Make Friendly:
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    " Plug 'mhinz/vim-startify'               " fancy start screen for vim 
+
+    " Shell:
+    Plug 'scrooloose/nerdtree'
+    Plug 'samoshkin/vim-lastplace'              " 파일을 열때 마지막 상태로 불러들임
+    Plug 'vim-scripts/CursorLineCurrentWindow'
+
+    " Search:
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'junegunn/vim-slash'                   " 검색된 결과를 강조(highlight), 커서가 벗어나면 강조해제
+
+    " GIT:
+    Plug 'tpope/vim-fugitive'                 " git plugin
+    Plug 'junegunn/gv.vim'                    " git commit browser :GV | GV! | GV?
+    Plug 'airblade/vim-gitgutter'             " show git diff in the 'gutter' (sign colume)
+
+    " Keyboard:
+    Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+                                                " C-n | n N q, check :help visual-multi 
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-surround'                   " surroundings: parentheses, brackets, quotes, XML tabs and more
+                                                " cs"'|cs'<q>|ysiw]|cs]{|yssb
+                                                " or yss)|ysiw<em>|visual mode S<p class="important">
+    Plug 'jiangmiao/auto-pairs'                 " pair brackets, parens, quotes
+    Plug 'vim-scripts/AutoComplPop'             " :help AutoComplPop 
+    Plug 'christoomey/vim-tmux-navigator'       " navation between vim and tmux splits
+
+    " Markdown:
+    Plug 'plasticboy/vim-markdown'              " syntax highlighting matching rules and mappings for the original Markdown and extensions
+
+call plug#end()
+
+" }}}
+
+" Simple Plugin Configurations: {{{
+
+set background=dark
+colorscheme catppuccin_macchiato
+" colorscheme catppuccin_frappe
+
+" AutoComplPop: 관련 설정
+set complete+=kspell
+set completeopt=menuone,longest
+set shortmess+=c
+
+" Airline:
+" let g:airline_theme = 'sonokai'
+let g:airline_powerline_fonts = 1
+let g:airline_section_z = ' %{strftime("%-I:%M %p")}'
+let g:airline_section_warning = ''
+
+" LimeLight: 
+nmap <Leader>l <Plug>(Limelight)
+xmap <Leader>l <Plug>(Limelight)
+
+" NerdTree:
+noremap  <leader>ee :NERDTreeToggle<CR>
+nnoremap <leader>ef :NERDTreeFind<CR>
+
+" }}}
+
+" Fzf_Settings: {{{
+" Files (runs $FZF_DEFAULT_COMMAND if defined)
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader>fc :Colors<CR>
+nnoremap <leader>fa :Ag<CR>
+nnoremap <leader>fr :Rg<CR>
+" rg search result; relaunch ripgrep on every keystroke
+nnoremap <leader>fR :RG<CR>
+
+" This is the default option:
+"   - Preview window on the right with 50% width
+"   - CTRL-/ will toggle preview window.
+" - Note that this array is passed as arguments to fzf#vim#with_preview function.
+" - To learn more about preview window options, see `--preview-window` section of `man fzf`.
+" let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
+
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Path completion with custom source command
+inoremap <expr> <c-x><c-f> fzf#vim#complete#path('fd')
+inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
+
+" Word completion with custom spec with popup layout option
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'window': { 'width': 0.2, 'height': 0.9, 'xoffset': 1 }})
+" Replace the default dictionary completion with fzf-based fuzzy completion
+inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
+
+" }}}
+
+" Folding: {{{
+
+" 속도 문제가 발생, 파일오픈 시 unfolded로 불러들임.
+set foldenable
+set foldmethod=marker
+set foldlevelstart=2
+" set foldcolumn=1
+
+" What triggers automatic fold opening
+set foldopen-=block
+set smartindent
+set foldopen-=hor
+set foldopen+=jump
+
+" Remap because 'za' is highly inconvenient to type
+nnoremap <leader><Space> za
+" Remap folds everything all the way: fold-close-all
+nnoremap <leader>za zM
+
+" }}}
+
+" Window Management: {{{
+
+" 적응해서 사용하기: 괜찮은 것 같음
+" Navigate between windows
+noremap <silent> <C-k> :wincmd k<CR>
+noremap <silent> <C-j> :wincmd j<CR>
+noremap <silent> <C-h> :wincmd h<CR>
+noremap <silent> <C-l> :wincmd l<CR>
+
+" Use <Bslash> instead of <C-w>, which is tough to type
+nmap <Bslash> <C-w>
+
+" Splits: default splitabove
+set splitbelow
+set splitright
+nnoremap <silent> <leader>_ :split<CR>
+nnoremap <silent> <leader>\| :vsplit<CR>
+nnoremap <silent> <leader>0 :only<CR>
+
+" Maximize Split: Use '<C-w>=' to make window sizes equal back
+nnoremap <C-w><Bslash> <C-w>_<C-w>\|
+
+" Tab Navigation:
+nnoremap <silent> <leader>1 :tabnext 1<CR>
+nnoremap <silent> <leader>2 :tabnext 2<CR>
+nnoremap <silent> <leader>3 :tabnext 3<CR>
+nnoremap <silent> <leader>4 :tabnext 4<CR>
+nnoremap <silent> <leader>5 :tabnext 5<CR>
+nnoremap <silent> <leader>9 :tablast<CR>
+
+" Tab Management:
+nnoremap <silent> <leader>+ :tabnew<CR>:edit .<CR>
+nnoremap <silent> <leader>) :tabonly<CR>
+nnoremap <silent> <leader>- :tabclose<CR>
+
+" }}}
+
+" Vim Commentary: {{{
+
+" add comment string as filetype
+autocmd FileType vim setlocal commentstring=\"\ %s
+autocmd FileType apache setlocal commentstring=#\ %s
+
+" Comment line and move 1 line down
+nmap <silent> <leader>c <Plug>CommentaryLine :normal j<CR>
+xmap <leader>c <Plug>Commentary
+
+" }}}
+
+" Vim_Markdown: {{{
+
+let g:vim_markdown_folding_disabled = 1
+
+" }}}
+
+
+" Startify: {{{
+let g:startify_custom_header = [
+  \ '   ____  _ _ _                      _   _         ____  _         _ _     _      ',
+  \ '  / ___|(_) | |__   ___  _   _  ___| |_| |_ ___  / ___|| |_ _   _| (_)___| |_    ',
+  \ '  \___ \| | |  _ \ / _ \| | | |/ _ \ __| __/ _ \ \___ \| __| | | | | / __| __|   ',
+  \ '   ___) | | | | | | (_) | |_| |  __/ |_| ||  __/  ___) | |_| |_| | | \__ \ |_    ',
+  \ '  |____/|_|_|_| |_|\___/ \__,_|\___|\__|\__\___| |____/ \__|\__, |_|_|___/\__|   ',
+  \ '                                                             |___/               ',
+  \ '                                                                                 ',
+  \ '               __  __       ____        _   _   _                                ',
+  \ '               \ \/ /_   _ |  _ \  ___ (_) | | | | _   _   __ _  _ __    __ _    ',
+  \ '                \  /| | | || |_) |/ _ \| | | |_| || | | | / _` || `_ \  / _` |   ',
+  \ '                /  \| |_| ||  __/|  __/| | |  _  || |_| || (_| || | | || (_| |   ',
+  \ '               /_/\_\\__,_||_|    \___||_| |_| |_| \__,_| \__,_||_| |_| \__, |   ',
+  \ '                                                                        |___/    ', 
+  \ ]
+
+" 'most recent files' number
+let g:startify_files_number = 15
+let g:startify_session_persistence = 1
+let g:startify_lists = [
+  \ { 'type': 'files',        'header': ['    Recent Files']  },
+  \ { 'type': 'dir',          'header': ['    Recent Files '.  getcwd()]  },
+  \ { 'type': 'sessions',     'header': ['    Saved Sessions']  },
+  \ { 'type': 'bookmarks',    'header': ['    Bookmarks']  },
+  \ ]
+
+function! s:sy_add_bookmark(bookmark)
+  if !exists('g:startify_bookmarks')
+    let g:startify_bookmarks = []
+  endif
+  let g:startify_bookmarks += [ a:bookmark ]
+  endfunction
+
+command! -nargs=1 StartifyAddBookmark call <sid>sy_add_bookmark(<q-args>)
+
+" }}}
+
+" Emoji Shortcuts: {{{
+ab :) 😃
+ab :check_mark: ✅
+ab :warning: ⚠️
+ab :bulb: 💡
+ab :pushpin: 📌
+ab :bomb: 💣
+ab :pill: 💊
+ab :point_right: 👉
+ab :book: 📖
+ab :link: 🔗
+ab :email: 📨
+ab :smile: 😃
+ab :cold_sweat: 😰
+ab :smile_sweat: 😅
+ab :scary: 😱
+ab :pencil: ✏️ 
+ab :thermometer: 🌡️
+ab :speech: 💬
+ab :pin: 📍
+ab :telescope: 🔭
+ab :lollipop: 🍭
+ab :barber: 💈
+ab :bell: 🔔
+ab :prohibited: 🚫
+ab :!: ❗
+ab :!!: ‼️
+ab :sun: 🔆
+ab :no: ⛔
+ab :chick: 🐥
+ab :rain: 🌧️
+" }}}
+
+
