@@ -22,6 +22,10 @@
     path = common/.vim/plugged/vim-startify
     url = https://github.com/mhinz/vim-startify 
 
+[submodule "auto-pairs"]
+    path = common/.vim/plugged/auto-pairs
+    url = https://github.com/jiangmiao/auto-pairs
+
 [submodule "vim-slash"]
     path = common/.vim/plugged/vim-slash
     url = https://github.com/junegunn/vim-slash
@@ -59,7 +63,7 @@
     url = https://github.com/preservim/nerdtree
 
 [submodule "limelight.vim"]
-    path = common/.vim/plugged/limelight.vim/
+    path = common/.vim/plugged/limelight.vim
     url = https://github.com/junegunn/limelight.vim
 
 [submodule "gv.vim"]
@@ -71,15 +75,19 @@
     url = https://github.com/junegunn/goyo.vim
 
 [submodule "fzf.vim"]
-    path = common/.vim/plugged/fzf.vim/
+    path = common/.vim/plugged/fzf.vim
     url = https://github.com/junegunn/fzf.vim
 
-[submodule "fzf"]
+[submodule "plugged fzf"]
     path = common/.vim/plugged/fzf
     url = https://github.com/junegunn/fzf
 
+[submodule "fzf"]
+    path = common/.fzf
+    url = https://github.com/junegunn/fzf
+
 [submodule "catppuccin"]
-    path = common/.vim/plugged/catppuccin/
+    path = common/.vim/plugged/catppuccin
     url = https://github.com/catppuccin/vim
 
 [submodule "CursorLineCurrentWindow"]
