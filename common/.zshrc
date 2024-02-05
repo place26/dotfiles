@@ -44,39 +44,34 @@ bindkey '^f' cd_with_fzf
 bindkey '^o' open_with_fzf
 bindkey '^[p' open_ps_fzf
 bindkey '^[o' open_pages_fzf
-
+# -H 옵션 추가 : hidden directory 검색 포함
+# cd_with_fzf() {
+#     cd $HOME && cd "$(fd -H -t d | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" && echo "$PWD" && tree -L 2
+# }
 cd_with_fzf() {
-    cd /users/xupei/ && cd "$(fd -t d -H -E '.*/\.[^.config][^/]*' -E 'Library' -E 'Photos Library.photoslibrary' | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)"
+    cd $HOME && cd "$(fd -t d -H -E Library | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" && echo "$PWD" && tree -L 2
 }
 
 open_with_fzf() {
     fd -t f -H -I | fzf -m --preview="bat {}" | open 2>&-
 }
 
-# 고객이름으로 해당 directory로 이동, MacPro 기준으로 폴더 지정 함
-# open_ps_fzf() {
-#     cd /Users/xupei/PS/ && cd "$(fd -t d | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" && echo "$PWD" && tree -L 1
-# }
-
+# 아래 두가지 중 환경에 맞게 사용
+# ALT_P키로 환자의 이름이나 촬영날짜에 해당하는 폴더로 이동이 가능
+# 폴더에서 Finder를 열려면 open . 명형어를 입력
+# MacPro
 open_ps_fzf() {
-    cd /Users/xupei/PS/ && cd "$(fd -t d | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" 2>&-
-
-    # if [ "$?" -eq 0 ]; then
-    #     echo "$PWD"
-    #     tree -L 1
-
-    #     # Prompt to open in Finder
-    #     read "?Press 'o' to open in Finder: " -k 1 answer
-    #     echo
-
-    #     if [[ "$answer" == "o" ]]; then
-    #         open .
-    #     fi
-    # fi
+    cd /Volumes/12THDD/huahan/ && cd "$(fd -t d -E 'SynologyDrive' | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)"
 }
 
+# mb16
+# open_ps_fzf() {
+#     cd /Users/xupei/PS/ && cd "$(fd -t d | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" 2>&-
+# }
+
+# iCloud/Share에서 공유되고 있는 환자 수술/치료기록 파일을 검색하여 pages로 열기
 open_pages_fzf() {
-    cd /Users/xupei/Library/Mobile\ Documents/com~apple~CloudDocs/Share && open "$(fd -td | fzf )"
+    cd /Users/xupei/Library/Mobile\ Documents/com~apple~CloudDocs/Share && open "$( fd -td | fzf )"
 }
 
 zle -N cd_with_fzf
