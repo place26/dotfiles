@@ -9,6 +9,7 @@ success_symbol = "[>](bold green)"     # The "success_symbol" segment is being s
 # Disable the package module, hiding it from the prompt completely
 # [package]
 # disabled = true
+# zsh에서는 이전부터 사용하던 것 사용해도 충분한 것 같음
 
 [username]
 style_user = "#66ccff"

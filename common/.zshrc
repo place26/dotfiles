@@ -9,6 +9,7 @@ precmd() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 
 zstyle ':vcs_info:git:*' formats 'on branch %b '
+# zstyle ':vcs_info:git*' formats "%{$fg[grey]%}%s %{$reset_color%}%r/%S%{$fg[grey]%} %{$fg[blue]%}%b%{$reset_color%}%m%u%c%{$reset_color%} "
 setopt PROMPT_SUBST
 
 PROMPT='%F{117}%n%f  %F{221}%m%f   %F{038}${PWD/#$HOME/~}%f ${vcs_info_msg_0_}
