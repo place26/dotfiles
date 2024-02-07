@@ -47,6 +47,9 @@ bindkey '^o' open_with_fzf
 bindkey '^[p' open_ps_fzf
 bindkey '^[o' open_pages_fzf
 
+# exclude 폴더 설정
+export Exclude_Folders="-E Library -E Pictures -E Applications -E Movies -E Music -E *.tar.gz -E *.tar -E PS -E *.pages"
+
 # 별로 사용하지 않는 기능, fzf에서 기본적으로 ALT_C 조합을 지원하나 하위 폴더만을 검색 
 # # ALT_D는 우선 홈으로 이동 후 검색
 cd_with_fzf() {
@@ -56,7 +59,9 @@ cd_with_fzf() {
 # fzf과 bat을 이용해 파일 내용을 미리 보고 open할 수 있는 기능
 # --search-path 옵션 추가
 open_with_fzf() {
-    fd -t f -H -I --search-path=/Users/xupei/ | fzf -m --preview="bat {}" | open 2>&-
+    # Documents, Sync 폴더 검색 bat 활용, obsidian fd 참조
+    # -a = --absolut-path
+    cd $HOME && fd -a -tf -H $Exclude_Folders | fzf -m --preview='bat --style=numbers --color=always {}' --preview-window=right:70%:wrap --bind='enter:execute(vim {+} < /dev/tty)'
 }
 
 # 아래 두가지 중 환경에 맞게 사용
@@ -65,7 +70,7 @@ open_with_fzf() {
 # 검색된 해당폴더로 이동을 위해 미리 huahan 폴더로 이동
 # MacPro
 open_ps_fzf() {
-    cd /Volumes/12THDD/huahan/ && cd "$(fd -t d -E 'SynologyDrive' | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)"
+    cd /Volumes/12THDD/huahan/ && cd "$(fd -t d -E 'SynologyDrive' | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" && echo "$PWD" && tree -L 2
 }
 
 # mb16
