@@ -41,12 +41,12 @@ mapkey("<leader>sm", "MaximizerToggle", "n") -- Toggle Minimise
 mapkey("<leader>sx", "close<CR>", "n") -- close current split window
 
 -- Indenting
-mapkey("<", "v", "<gv") -- Shift Indentation to Left
-mapkey(">", "v", ">gv") -- Shift Indentation to Right
+mapkey("<", "<gv", "v") -- Shift Indentation to Left
+mapkey(">", ">gv", "v") -- Shift Indentation to Right
 
 -- Show Full File-Path
 mapkey("<leader>pa", "echo expand('%:p')", "n") -- Show Full File Path
 
 -- Comments
-vim.api.nvim_set_keymap("n", "<C-_>", "gtc", { noremap = false })
-vim.api.nvim_set_keymap("v", "<C-_>", "goc", { noremap = false })
+mapkey("<leader>c", "gcc", "n")    -- line-comment
+mapkey("<leader>c", "gbc", 'v')    -- block-comment 

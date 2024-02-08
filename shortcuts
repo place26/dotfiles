@@ -1,0 +1,54 @@
+shortcuts
+
+<leader>bn  -- Next buffer
+<leader>bp  -- Prev buffer
+<leader>bb  -- Switch to Other Buffer
+<leader>`   -- Switch to Other Buffer
+
+jk          -- exit insert mode
+<leader>nh  -- clear search highlights
+
+-- tabs
+<leader>to  -- tabnew<CR>   -- open new tab
+<leader>tx  -- tabclose<CR> -- close current tab
+<leader>tn  -- tabn<CR>     -- go to next tab
+<leader>tp  -- tabp<CR>     -- go to previous tab
+<leader>tf  -- tabnew %<CR> -- move current buffer to new tab
+
+-- Window Management
+<leader>sv  -- vsplit       -- Split Vertically
+<leader>sh  -- split", "n") -- Split Horizontally
+<leader>sm  -- MaximizerToggle -- Toggle Minimise
+<leader>sx  -- close<CR>    -- close current split window
+
+-- Indenting
+mapkey("<", "v", "<gv") -- Shift Indentation to Left
+mapkey(">", "v", ">gv") -- Shift Indentation to Right
+
+-- Show Full File-Path
+mapkey("<leader>pa", "echo expand('%:p')", "n") -- Show Full File Path
+
+-- Comments
+`gcc` - Toggles the current line using linewise comment
+`gbc` - Toggles the current line using blockwise comment
+`[count]gcc` - Toggles the number of line given as a prefix-count using linewise
+`[count]gbc` - Toggles the number of line given as a prefix-count using blockwise
+`gc[count]{motion}` - (Op-pending) Toggles the region using linewise comment
+`gb[count]{motion}` - (Op-pending) Toggles the region using blockwise comment
+`gc` - Toggles the region using linewise comment
+`gb` - Toggles the region using blockwise comment
+`gco` - Insert comment to the next line and enters INSERT mode
+`gcO` - Insert comment to the previous line and enters INSERT mode
+`gcA` - Insert comment to end of the current line and enters INSERT mode
+# Linewise
+`gcw` - Toggle from the current cursor position to the next word
+`gc$` - Toggle from the current cursor position to the end of line
+`gc}` - Toggle until the next blank line
+`gc5j` - Toggle 5 lines after the current cursor position
+`gc8k` - Toggle 8 lines before the current cursor position
+`gcip` - Toggle inside of paragraph
+`gca}` - Toggle around curly brackets
+# Blockwise
+`gb2}` - Toggle until the 2 next blank line
+`gbaf` - Toggle comment around a function (w/ LSP/treesitter support)
+`gbac` - Toggle comment around a class (w/ LSP/treesitter support)

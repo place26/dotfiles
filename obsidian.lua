@@ -23,8 +23,8 @@ return {
   -- You can also provide configuration overrides for each workspace through the `overrides` field.
     workspaces = {
       {
-        name = "obsidian nvim",
-        path = "~/Sync/obsidian_icloud_share/every_notes",
+        name = "obsidian syncthing",
+        path = "~/Sync/obsidian-sync",
       },
       {
         name = "work",
