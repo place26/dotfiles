@@ -24,7 +24,7 @@ return {
     workspaces = {
       {
         name = "obsidian nvim",
-        path = "~/Personal/obsidian-nvim",
+        path = "~/Sync/obsidian_icloud_share/every_notes",
       },
       {
         name = "work",

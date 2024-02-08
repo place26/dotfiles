@@ -1,0 +1,9 @@
+set previewer imgcat_preview
+
+cmd imgcat_preview $f {
+    case $(file --mime-type -b "$f") in
+        image/*) imgcat "$f";;
+        *) echo "File preview not available";;
+    esac
+}
+
