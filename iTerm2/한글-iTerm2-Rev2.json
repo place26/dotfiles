@@ -53,7 +53,7 @@
     "slogin",
     "telnet"
   ],
-  "Scrollback Lines" : 1000,
+  "Scrollback Lines" : 0,
   "Flashing Bell" : false,
   "Cursor Guide Color" : {
     "Red Component" : 0.17867125570774078,
@@ -262,15 +262,14 @@
   "Ansi 2 Color" : {
     "Red Component" : 0.52591603994369507,
     "Color Space" : "Calibrated",
-    "Blue Component" : 0.082894742488861084,
+    "Blue Component" : 0.082894742488861112,
     "Alpha Component" : 1,
     "Green Component" : 0.53061914443969727
   },
   "Send Code When Idle" : false,
   "ASCII Anti Aliased" : true,
   "Tags" : [
-    "NFC",
-    ""
+    "NFC"
   ],
   "Ansi 9 Color" : {
     "Red Component" : 0.96744710206985474,
@@ -310,7 +309,7 @@
   "Ansi 1 Color" : {
     "Red Component" : 0.74529051780700684,
     "Color Space" : "Calibrated",
-    "Blue Component" : 0.090684391558170319,
+    "Blue Component" : 0.090684391558170346,
     "Alpha Component" : 1,
     "Green Component" : 0.05879192054271698
   },
