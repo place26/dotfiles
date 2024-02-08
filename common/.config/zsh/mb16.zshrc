@@ -39,63 +39,43 @@ export XDG_CONFIG_HOME=$HOME/.config
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# keybingd for fzf
-bindkey '^f' cd_with_fzf
+# keybingd for fzf : 흔히 필요로하는 기능을 keybinding을 통해 할당
+# # MacOS에서 ALT키를 사용하기 위해서는 iterm에서 preferences>profiles>keys에서 왼쪽 Option key에 대해 Esc+로 설정해야 함
+bindkey '^[d' cd_with_fzf
 bindkey '^o' open_with_fzf
 bindkey '^[p' open_ps_fzf
 bindkey '^[o' open_pages_fzf
 
+# 별로 사용하지 않는 기능, fzf에서 기본적으로 ALT_C 조합을 지원하나 하위 폴더만을 검색 
+# # ALT_D는 우선 홈으로 이동 후 검색
 cd_with_fzf() {
-    cd /users/xupei/ && cd "$(fd -t d -H -E '.*/\.[^.config][^/]*' -E 'Library' -E 'Photos Library.photoslibrary' | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)"
+    cd $HOME && cd "$(fd -t d -H -E Library | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" && echo "$PWD" && tree -L 2
 }
 
+# fzf과 bat을 이용해 파일 내용을 미리 보고 open할 수 있는 기능
+# --search-path 옵션 추가
 open_with_fzf() {
-    fd -t f -H -I | fzf -m --preview="bat {}" | open 2>&-
+    cd $HOME && fd -tf -E '*.tar.gz' -E '*.tar' -E '*.jpg' -E '*.png' -E '*.jpeg' -H --search-path '/Users/xupei/Sync' --search-path '/Users/xuepi/LogSEQ-EveryNotes' --search-path '/Users/xupei/Personal/' | fzf -m --preview="bat --style=numbers --color=always {}" --preview-window=70%:wrap --bind='enter:execute(vim {} < /dev/tty)'
 }
 
-# 고객이름으로 해당 directory로 이동, MacPro 기준으로 폴더 지정 함
+# 아래 두가지 중 환경에 맞게 사용
+# ALT_P키로 환자의 이름이나 촬영날짜에 해당하는 폴더로 이동이 가능
+# 폴더에서 Finder를 열려면 open . 명형어를 입력
+# 검색된 해당폴더로 이동을 위해 미리 huahan 폴더로 이동
+# MacPro
 # open_ps_fzf() {
-#     cd /Users/xupei/PS/ && cd "$(fd -t d | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" && echo "$PWD" && tree -L 1
+#     cd /Volumes/12THDD/huahan/ && cd "$(fd -t d -E 'SynologyDrive' | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)"
 # }
 
+# mb16
 open_ps_fzf() {
     cd /Users/xupei/PS/ && cd "$(fd -t d | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" 2>&-
-
-    # if [ "$?" -eq 0 ]; then
-    #     echo "$PWD"
-    #     tree -L 1
-
-    #     # Prompt to open in Finder
-    #     read "?Press 'o' to open in Finder: " -k 1 answer
-    #     echo
-
-    #     if [[ "$answer" == "o" ]]; then
-    #         open .
-    #     fi
-    # fi
 }
 
+# iCloud/Share에서 공유되고 있는 환자 수술/치료기록 파일을 검색하여 pages로 열기
 open_pages_fzf() {
-    cd /Users/xupei/Library/Mobile\ Documents/com~apple~CloudDocs/Share && open "$(fd -td | fzf )"
+    cd /Users/xupei/Library/Mobile\ Documents/com~apple~CloudDocs/Share && open "$( fd -td | fzf )"
 }
-
-# open_ps_fzf() {
-#     cd /Users/xupei/PS/ && cd "$(fd -t d | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)"
-
-#     if [ "$?" -eq 0 ]; then
-#         echo "$PWD"
-#         tree -L 1
-
-#         # Prompt to open in Finder
-#         echo "Press 'o' to open in Finder (any other key to cancel):"
-#         read -k 1 answer
-#         echo
-
-#         if [[ "$answer" == "o" ]]; then
-#             open .
-#         fi
-#     fi
-# }
 
 zle -N cd_with_fzf
 zle -N open_with_fzf
