@@ -1,0 +1,27 @@
+[shell]
+program="/bin/zsh"
+
+[window]
+padding = { x = 5, y = 5 }
+decorations = "Full"
+blur = true
+opacity = 0.85
+decorations_theme_variant = "Dark"
+
+
+[font]
+normal = { family = "MesloLGL Nerd Font Mono", style = "Regular" }
+bold = { family = "MesloLGL Nerd Font Mono", style = "Bold" }
+italic = { family = "MesloLGL Nerd Font Mono", style = "Italic" }
+bold_italic = { family = "MesloLGL Nerd Font Mono", style = "Bold Italic" }
+size = 14
+offset = { x = 0, y = 1 }
+
+[selection]
+save_to_clipboard = true
+
+[cursor]
+style = { shape = "Block", blinking = "On" }
+
+[mouse]
+hide_when_typing = true
