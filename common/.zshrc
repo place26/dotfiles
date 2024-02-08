@@ -30,7 +30,7 @@ SAVEHIST=50000
 bindkey -v
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/settings:$HOME/config/:/opt/homebrew/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH
 export GOROOT=/usr/local/go
 # 설정 관리 일원화
 export XDG_DATA_HOME=$HOME/.config
@@ -70,6 +70,7 @@ open_with_fzf() {
 # 검색된 해당폴더로 이동을 위해 미리 huahan 폴더로 이동
 # MacPro
 open_ps_fzf() {
+    # cd /Volumes/12THDD/huahan/ && fd -t d -E 'SynologyDrive' | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden --bind='enter:execute(imgcat {+} < /dev/tty)'
     cd /Volumes/12THDD/huahan/ && cd "$(fd -t d -E 'SynologyDrive' | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" && echo "$PWD" && tree -L 2
 }
 
