@@ -188,6 +188,12 @@ alias ld='lsd -tXh1l --git --icon auto'
 # wether forecast with curl
 alias weather='curl wttr.in/qindao'
 
+# for vim supporting python3, brew를 사용하여 설치 함
+# 맥에서 기본 설치된 vim이 아닌 brew로 설치한 vim을 사용하도록 함
+if (command -v brew && brew list --formula | grep -c vim ) > /dev/null 2>&1; then
+    alias vim="$(brew --prefix vim)/bin/vim"
+fi
+
 # Macpro specific
 alias syncbakcup="~/backup_script/backup_sync.sh"
 alias showshotw="~/backup_script/showshots"
