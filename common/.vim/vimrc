@@ -131,10 +131,10 @@ call plug#begin()
     Plug 'jiangmiao/auto-pairs'                 " pair brackets, parens, quotes
     Plug 'vim-scripts/AutoComplPop'             " :help AutoComplPop 
     Plug 'christoomey/vim-tmux-navigator'       " navation between vim and tmux splits
-    Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
-
-    " Markdown:
+    Plug 'SirVer/ultisnips'                     " <tab>,<s-tab>으로 stop간 이동
+    Plug 'honza/vim-snippets'                   " 미리 설정된 snippets를 활용 가능, 마크다운도 있음
+ 
+    "  Markdown:
     Plug 'plasticboy/vim-markdown'              " syntax highlighting matching rules and mappings for the original Markdown and extensions
 
 call plug#end()
