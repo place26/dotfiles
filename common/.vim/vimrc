@@ -329,19 +329,28 @@ command! -nargs=1 StartifyAddBookmark call <sid>sy_add_bookmark(<q-args>)
 " }}}
 
 " Ultisnip: {{{
-" Trigger configuration. You need to change this to something other than
+" 실행 하기전 vim --version으로 python을 지원하는지 확인 필요
+" Trigger configuration. : 충돌 가능성이 큼
+" :verbose imap <tab> 활용 충돌 유무 확인
+" You need to change this to something other than
 " <tab> if you use one of the following:
 " - https://github.com/Valloric/YouCompleteMe
 " - https://github.com/nvim-lua/completion-nvim
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<A-b>"
-let g:UltiSnipsJumpBackwardTrigger="<A-n>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" 위의 <tab>키가 다른 플러그인과 충돌할 경우 
+" let g:UltiSnipsExpandTrigger="<leader><tab>"
+" let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
+" 를 사용하는 것을 고려해 볼 수 있음, 현재 문제 없이 작동 함.
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical""
 
 " auto-pair와 충동 해결
 let g:AutoPairsShortcutJump = ''
 let g:AutoPairsShortcutBackInsert = ''
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical""
 " }}}
 
 
