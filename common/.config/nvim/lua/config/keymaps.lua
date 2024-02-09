@@ -47,6 +47,3 @@ mapkey(">", ">gv", "v") -- Shift Indentation to Right
 -- Show Full File-Path
 mapkey("<leader>pa", "echo expand('%:p')", "n") -- Show Full File Path
 
--- Comments
-mapkey("<leader>c", "gcc", "n")    -- line-comment
-mapkey("<leader>c", "gbc", 'v')    -- block-comment 
