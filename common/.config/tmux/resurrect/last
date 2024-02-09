@@ -1,6 +1,1 @@
-pane	0	1	1	:*	1	MacPro-Monterey.local	:/Users/xupei/.config/nvim.base	1	nvim	:nvim /Users/xupei/.config/tmux/tmux.conf
-pane	2	1	1	:*	1	MacPro-Monterey.local	:/Users/xupei/.config/nvim	0	zsh	:
-pane	2	1	1	:*	2	MacPro-Monterey.local	:/Users/xupei/.config/nvim	1	zsh	:
-window	0	1	:nvim	1	:*	ccbd,133x48,0,0,0	:
-window	2	1	:zsh	1	:*	5d01,296x44,0,0{148x44,0,0,2,147x44,149,0,3}	:
-state	2	
+tmux_resurrect_20240209T154814.txt

@@ -5,4 +5,5 @@ common/.config/nvim/lazy/
 common/.config/lf/history
 common/.config/nvim/lazy-lock.json
 common/.config/nvim/telescope_history
-
+common/.config/tmux/plugins/
+common/.config/tmux/resurrect/

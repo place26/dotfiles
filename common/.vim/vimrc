@@ -193,17 +193,17 @@ omap <leader><tab> <plug>(fzf-maps-o)
 
 " Insert mode completion
 imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
+" imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Path completion with custom source command
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path('fd')
-inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
+" inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
 
 " Word completion with custom spec with popup layout option
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'window': { 'width': 0.2, 'height': 0.9, 'xoffset': 1 }})
 " Replace the default dictionary completion with fzf-based fuzzy completion
-inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
+" inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
 
 " }}}
 
@@ -228,8 +228,12 @@ nnoremap <leader>za zM
 
 " }}}
 
-" Window Management: {{{
+" Vim Lastplace: {{{
+let g:lastplace_ignore = "gitcommit,gitrebase,svn,hgcommit"
+let g:lastplace_ignore_buftype = "quickfix,nofile,help"
+" }}} 
 
+" Window Management: {{{
 " 적응해서 사용하기: 괜찮은 것 같음
 " Navigate between windows
 noremap <silent> <C-k> :wincmd k<CR>
@@ -266,15 +270,15 @@ nnoremap <silent> <leader>- :tabclose<CR>
 " }}}
 
 " Vim Commentary: {{{
-
+" 모든 파일 타입에 대해 <leader>c를 주석 처리 단축키로 설정
+autocmd FileType * nnoremap <buffer> <leader>c :Commentary<CR>
+autocmd FileType * vnoremap <buffer> <leader>c :Commentary<CR>
 " add comment string as filetype
-autocmd FileType vim setlocal commentstring=\"\ %s
-autocmd FileType apache setlocal commentstring=#\ %s
-
+" autocmd FileType vim setlocal commentstring=\"\ %s
+" autocmd FileType apache setlocal commentstring=#\ %s
 " Comment line and move 1 line down
 nmap <silent> <leader>c <Plug>CommentaryLine :normal j<CR>
 xmap <leader>c <Plug>Commentary
-
 " }}}
 
 " Vim_Markdown: {{{
