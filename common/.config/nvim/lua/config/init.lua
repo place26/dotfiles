@@ -51,4 +51,11 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter", "WinEnter"}, {
     end,
 })
 
+-- vim-multiple-cursors 설정
+vim.g.multi_cursor_start_key = '<A-m>'
+vim.g.multi_cursor_next_key = '<A-m>'
+vim.g.multi_cursor_prev_key = '<A-p>'
+vim.g.multi_cursor_skip_key = '<A-x>'
+vim.g.multi_cursor_quit_key = '<Esc>'
+
 require("lazy").setup('plugins')

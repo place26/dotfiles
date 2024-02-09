@@ -22,33 +22,25 @@ jk          -- exit insert mode
 <leader>sx  -- close<CR>    -- close current split window
 
 -- Indenting
-mapkey("<", "v", "<gv") -- Shift Indentation to Left
-mapkey(">", "v", ">gv") -- Shift Indentation to Right
+<     -- Shift Indentation to Left
+>     -- Shift Indentation to Right
 
 -- Show Full File-Path
-mapkey("<leader>pa", "echo expand('%:p')", "n") -- Show Full File Path
+<leader>pa  -- :echo expand('%:p') -- Show Full File Path
+
+-- Multiple Cursors
+<A-m>   -- multi cursor start, next
+<A-p>   -- previous
+<A-x>   -- skip
+<Esc>   -- quit
 
 -- Comments
-`gcc` - Toggles the current line using linewise comment
-`gbc` - Toggles the current line using blockwise comment
-`[count]gcc` - Toggles the number of line given as a prefix-count using linewise
-`[count]gbc` - Toggles the number of line given as a prefix-count using blockwise
-`gc[count]{motion}` - (Op-pending) Toggles the region using linewise comment
-`gb[count]{motion}` - (Op-pending) Toggles the region using blockwise comment
-`gc` - Toggles the region using linewise comment
-`gb` - Toggles the region using blockwise comment
-`gco` - Insert comment to the next line and enters INSERT mode
-`gcO` - Insert comment to the previous line and enters INSERT mode
-`gcA` - Insert comment to end of the current line and enters INSERT mode
-# Linewise
-`gcw` - Toggle from the current cursor position to the next word
-`gc$` - Toggle from the current cursor position to the end of line
-`gc}` - Toggle until the next blank line
-`gc5j` - Toggle 5 lines after the current cursor position
-`gc8k` - Toggle 8 lines before the current cursor position
-`gcip` - Toggle inside of paragraph
-`gca}` - Toggle around curly brackets
-# Blockwise
-`gb2}` - Toggle until the 2 next blank line
-`gbaf` - Toggle comment around a function (w/ LSP/treesitter support)
-`gbac` - Toggle comment around a class (w/ LSP/treesitter support)
+[count]gcc      -- 한줄씩 comment 처리
+[count]gbc      -- 블록으로 comment 처리
+gc[count]{motion} - (op-pending) toggles the region using linewise comment
+gb[count]{motion} - (op-pending) toggles the region using blockwise comment
+gc - toggles the region using linewise comment
+gb - toggles the region using blockwise comment
+gco - insert comment to the next line and enters insert mode
+gco - insert comment to the previous line and enters insert mode
+gca - insert comment to end of the current line and enters insert mode

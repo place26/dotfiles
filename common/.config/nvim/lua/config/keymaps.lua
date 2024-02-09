@@ -11,7 +11,7 @@ mapkey("<leader>`", "e #", "n") -- Switch to Other Buffer
 -- mapkey("<leader>e", "NvimTreeToggle", "n")
 
 mapkey("jk", "<ESC>", "i") -- jk to exit insert mode
-mapkey("<leader>nh", ":noh1<CR>", "n") -- clear search highlights
+mapkey("<leader>nh", ":nohl<CR>", "n") -- clear search highlights
 
 -- Pane and Window Navigation
 mapkey("<C-h>", "<C-w>h", "n") -- Navigate Left
@@ -46,4 +46,18 @@ mapkey(">", ">gv", "v") -- Shift Indentation to Right
 
 -- Show Full File-Path
 mapkey("<leader>pa", "echo expand('%:p')", "n") -- Show Full File Path
+
+-- 'vim-multiple-cursors' 플러그인의 키 맵핑 추가
+-- mapkey("<A-m>", "<Plug>(multiple-cursors-start)", 'n') -- Alt-m으로선택한 단어의 다중 선택을 시작 
+-- mapkey("<A-m>", "<Plug>(multiple-cursors-next)", 'n') -- 다음 단어로 이동
+-- mapkey("<A-p>", "<Plug>(multiple-cursors-prev)", 'n') -- 이전 단어로 이동
+-- mapkey("<A-x>", "<Plug>(multiple-cursors-skip)", 'n') -- 해당 단어 제외
+-- mapkey("<Esc>", "<Plug>(multiple-cursors-quit)", 'n') -- 다중선택 모든에서 나오기, 다중 커서는 유지
+
+-- 'vim-multiple-cursors' 플러그인의 키 맵핑 추가
+-- mapkey("<A-m>", function() vim.cmd('MultipleCursorsStart') end, 'n')
+-- mapkey("<A-m>", function() vim.cmd('MultipleCursorsNext') end, 'n')
+-- mapkey("<A-p>", function() vim.cmd('MultipleCursorsPrev') end, 'n')
+-- mapkey("<A-x>", function() vim.cmd('MultipleCursorsSkip') end, 'n')
+-- mapkey("<Esc>", function() vim.cmd('MultipleCursorsQuit') end, 'n')
 
