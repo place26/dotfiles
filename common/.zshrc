@@ -188,6 +188,10 @@ alias ld='lsd -tXh1l --git --icon auto'
 # wether forecast with curl
 alias weather='curl wttr.in/qindao'
 
+# Macpro specific
+alias syncbakcup="~/backup_script/backup_sync.sh"
+alias showshotw="~/backup_script/showshots"
+
 export ZSH_CUSTOM=$HOME/Sync/dotfiles/common/.config/zsh
 # git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.config/zsh/zsh-autosuggestions
 source $ZSH_CUSTOM/zsh-autosuggestions/zsh-autosuggestions.zsh
