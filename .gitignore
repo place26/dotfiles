@@ -1,3 +1,8 @@
-common/.vim/undo-dir/*
+common/.vim/undo-dir/
 .DS_Store
+common/.vim/plugged/
+common/.config/nvim/lazy/ 
+common/.config/lf/history
+common/.config/nvim/lazy-lock.json
+common/.config/nvim/telescope_history
 
