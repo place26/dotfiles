@@ -19,7 +19,7 @@ if wezterm.config_builder then config = wezterm.config_builder() end
 -- config.color_scheme = "Tokyo Night"
 config.color_scheme = "nightfox"
 config.font = wezterm.font_with_fallback {
-  { family = "MesloLGL Nerd Font Propo", scale = 1.0, weight = 'Regular' },
+  { family = "MesloLGM Nerd Font Propo", scale = 1.0, weight = 'Regular' },
   { family = "Symbols Nerd Font Mono", scale = 0.8 },
   { family = "NanumGothic" },
   { family = "RIDIBatang", scale = 1.0 },
