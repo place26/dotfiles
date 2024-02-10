@@ -39,8 +39,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 # LC_ALL=ko_KR.UTR-8로 설정할 경우 모든 시스템 메시지가 한글로 표시 됨
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-
-# western terminal emulator를 위한 설정
+# wezterm을 위한 환경 설정
 PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 export PATH
 
@@ -200,7 +199,7 @@ fi
 
 # Macpro specific
 alias syncbakcup="~/backup_script/backup_sync.sh"
-alias showshots="~/backup_script/showshots"
+alias showshotw="~/backup_script/showshots"
 
 export ZSH_CUSTOM=$HOME/Sync/dotfiles/common/.config/zsh
 # git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.config/zsh/zsh-autosuggestions
