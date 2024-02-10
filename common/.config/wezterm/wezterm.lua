@@ -19,7 +19,7 @@ if wezterm.config_builder then config = wezterm.config_builder() end
 -- config.color_scheme = "Tokyo Night"
 config.color_scheme = 'nightfox'
 config.font = wezterm.font_with_fallback {
-  'MesloLGL Nerd Font Mono',
+  { family = 'MesloLGL Nerd Font Mono', scale = 1.0, weight = 'Regular' },
   { family = "Symbols Nerd Font Mono", scale = 0.8 },
   'RIDIBatang',
   'DengXian',
@@ -28,10 +28,14 @@ config.font = wezterm.font_with_fallback {
 --   { family = "Iosevka Nerd Font",  scale = 1.24, weight = "Medium", },
 --   { family = "CaskaydiaCove Nerd Font",  scale = 1.2 },
 -- })
+
+config.line_height = 1.2
+config.font_size = 13.0
 config.window_background_opacity = 0.95
 config.window_decorations = "RESIZE"
 config.window_close_confirmation = "AlwaysPrompt"
 config.scrollback_lines = 20000
+
 config.default_workspace = "main"
 
 -- Dim inactive panes
