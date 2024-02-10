@@ -102,6 +102,9 @@ zle -N open_with_fzf
 zle -N open_ps_fzf
 zle -N open_pages_fzf
 
+# create and change to that directory
+mkcd() { mkdir -p $1; cd $1 }
+
 # --------------#
 # fzf 관련 설정 #
 # --------------#
