@@ -1,0 +1,15 @@
+(?d).DS_Store
+.tags
+*.swp
+(?d)Thumbs.db
+._Thumbs.db
+@eaDir/
+.Synology*
+.Trash
+/.Trash-1000/
+(?d)._.DS_Store
+_Archives\ Items/
+._*.*
+.git
+.gitignore
+/undo-dir/
