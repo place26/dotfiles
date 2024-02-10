@@ -40,6 +40,10 @@ export XDG_CONFIG_HOME=$HOME/.config
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+# western terminal emulator를 위한 설정
+PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
+export PATH
+
 # keybingd for fzf : 흔히 필요로하는 기능을 keybinding을 통해 할당
 # # MacOS에서 ALT키를 사용하기 위해서는 iterm에서 preferences>profiles>keys에서 왼쪽 Option key에 대해 Esc+로 설정해야 함
 bindkey '^[d' cd_with_fzf
@@ -196,7 +200,7 @@ fi
 
 # Macpro specific
 alias syncbakcup="~/backup_script/backup_sync.sh"
-alias showshotw="~/backup_script/showshots"
+alias showshots="~/backup_script/showshots"
 
 export ZSH_CUSTOM=$HOME/Sync/dotfiles/common/.config/zsh
 # git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.config/zsh/zsh-autosuggestions
