@@ -1,3 +1,72 @@
+" Reference: 참고 자료 및 중요 키  {{{
+" -------------------
+" Global:
+" :o openfile, :saveas files, :close, :q, :wq
+" :sh goto terminal, :termianl open new ternial in horizontal split
+" :noh remove highlight
+
+" Start Edit:
+" i(a) - insert before(after) cursor
+" I(A) - insert begining(end) of line
+" d - diw(delete inside), d%(mathing braces), dd(delete line)
+" c - ciw(delete and insert mode), cw, cc(delete line and start editing)
+
+" Tab Edit:
+" :tabedit, :tabfirst, :tablast, :tabn(next), :tabp(previous),
+" :tabclose, :tabonly, gt(next tab), gT(previous tab), 2gt(second tab)
+" :mksession header-files-work.vim or :source header-files-work.vim,
+" :mks!(if changed session tab :mks! to store)
+
+" Cursor Movement:
+" 0 (start), $(end) of the line
+" ^(g_) first(last)  non-block character of the line
+" % jumpt to the next parenthesis or bracket
+
+" Marking:
+" mk - move to end of block - y'k(copy block), d'k(delete block)
+" mb - opening brace position - %(curse to close brace position) - zf'b
+" (folding selected b block)
+" m{a-z,A-z} - :marks, goto mark '+mark
+" mP - 'P(대문자의 경우 global: 해당 위치로 커서 이동) `P(begining of file)
+
+" Folding:
+" :5,26fo (5th to 26th line folding), zo(open the code fold), za(cloose the
+" code fold), za(open and close)
+" 폴딩 설정 저장: ~/.vimrc에 아래 두라인을 추가
+" autocmd BufWinLeave *.* mkview
+" autocmd BufWinEnter *.* silent loadview
+
+" Code Indentation:
+" :=i{ - i(inner object) : 커서를 블록 내 위치 시킨 후 normal mode에서 =i{
+" increase/decrease indentation - :>i(increase), :<i(decrease)
+
+" Explorer Directory:
+" :Ex(plore), :Sexplore, Vexplore, Texplore(tab),
+"
+" Buffers:
+" :bnext(:bn), bprev(:bp), :bdel(buffer delete)
+" :ls - list all open buffers
+
+" Macro:
+" q{register}(start macro named a) - do something - q(end recording macro) - @a(excute
+" recorded marcro a)
+" :reg - see values of every registers
+
+" Remote SSH Editing:
+" vim scp://user@remote/relative/path/of/file
+" vim scp://remotehost-ssh.config/path
+
+" Searc Multiple Files:
+" :vimgrep /pattern/ {file}
+" :cn(:cp) next(previous) match
+" :copen - open a window containing the list of matches
+
+" Exiting:
+" :w
+" :w !sudo tee %A
+"
+" }}}
+
 " General Settings: {{{
 
 if has('termguicolors')
@@ -70,10 +139,20 @@ let maplocalleader=" "
 
 " iPad를 위해 <ESC>를 키 매핑, 무척 편리함. set paste와 같이 쓸 경우 안됨.
 inoremap jk <ESC>
+inoremap ㅓㅏ <ESC>
+" 긴줄의 경우 j k 키가 원하지 않게 움직이는 것을 교정
+noremap k gk
+noremap j gj
 
 " Terminal: i로 시작, exit로 빠져나옴
 nmap <leader>s <C-w>s<C-w>j:terminal<CR>
 nmap <leader>vs <C-w>v<C-w>l:terminal<CR>
+
+" vim-smooth-scroll : 의외로 쓸모 있음
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 20, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 20, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 20, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 20, 4)<CR>
 
 " }}}
 
@@ -105,6 +184,7 @@ call plug#begin()
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     " Plug 'mhinz/vim-startify'               " fancy start screen for vim 
+    Plug 'terryma/vim-smooth-scroll'             " C-u(p)|d(own)|b(ack)|f(ront)
 
     " Shell:
     Plug 'scrooloose/nerdtree'
@@ -171,6 +251,7 @@ nnoremap <leader>ef :NERDTreeFind<CR>
 " Fzf_Settings: {{{
 " Files (runs $FZF_DEFAULT_COMMAND if defined)
 nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fF :Files!<CR>
 nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>fc :Colors<CR>
 nnoremap <leader>fa :Ag<CR>
@@ -185,8 +266,19 @@ nnoremap <leader>fR :RG<CR>
 " - To learn more about preview window options, see `--preview-window` section of `man fzf`.
 " let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
 
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+" command! -bang -nargs=? -complete=dir Files
+    " \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+
+" Use preview when FzfFiles runs in fullscreen
+" command! -nargs=? -bang -complete=dir Files
+            " \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+
+" 지정한 폴더를 기준으로 file searching
+command! -bang Sync call fzf#vim#files('~/Sync', <bang>0)
+command! -bang LogSEQ call fzf#vim#grep('~/LogSEQ-EveryNotes/')
+" command! -bang MBQDPatients call fzf#vim#files('~/Pictures/QDPhotos.MBP', <bang>0)
+" command! -bang MB2TQDPatients call fzf#vim#files('/Volumes/2TSSD/QDPhotos.2TSSD', <bang>0)
+" command! -bang BCRsyncLogs call fzf#vim#files('~/Rsync/logs', <bang>0)
 
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
@@ -283,6 +375,50 @@ nmap <silent> <leader>c <Plug>CommentaryLine :normal j<CR>
 xmap <leader>c <Plug>Commentary
 " }}}
 
+" Fugitive: {{{
+" 몇가지 정상적으로 작동하지 않음. 수정 필요
+" View GIT index window
+nnoremap <silent> <leader>gs :Gstatus<CR>
+
+" Use <leader>ge to return to working tree version from blob, blame, log
+nnoremap <silent> <leader>ge :Gedit<CR>
+
+" Undo changes in working tree
+" nnoremap <silent> <leader>gu :Git checkout HEAD -- %:p<CR>
+nnoremap <silent> <leader>gu :Gread<CR>
+xnoremap <silent> <leader>gu :Gread<CR>
+
+" Commit changes
+nnoremap <silent> <leader>gca :Gcommit --all --verbose<CR>
+nnoremap <silent> <leader>gcf :Gcommit --amend --reuse-message HEAD<CR>
+nnoremap <silent> <leader>gcf :Gcommit --amend --verbose<CR>
+
+" Diff working tree vs index vs HEAD
+nnoremap <silent> <leader>gdw :Gdiff<CR>
+nnoremap <silent> <leader>gdh :Gdiff HEAD<CR>
+nnoremap <silent> <leader>gdi :Gdiff --cached HEAD<CR>
+
+" gla, gva, list (a)ll commits
+nnoremap <silent> <leader>gla :Commits<CR>
+nnoremap <silent> <leader>gva :GV<CR>
+
+" glf, gvf, list commits touching current (f)ile
+nnoremap <silent> <leader>glf :BCommits<CR>
+nnoremap <silent> <leader>gvf :GV!<CR>
+xnoremap <silent> <leader>gvf :GV<CR>
+
+" gls, gvs, list commits touching current file, but show file revisions or (s)napshots (populates quickfix list)
+nnoremap <silent> <leader>gls :silent! Glog<CR><C-l>
+nnoremap <silent> <leader>gvs :GV?<CR>
+
+" glF, list commits touching current file, show full commit objects (using vim-fugitive)
+nnoremap <silent> <leader>glF :silent! Glog -- %<CR><C-l>
+
+" Change branch
+nnoremap <silent> <leader>gco :Git checkout<Space>
+"
+" }}}
+
 " Vim_Markdown: {{{
 
 let g:vim_markdown_folding_disabled = 1
@@ -351,6 +487,7 @@ let g:UltiSnipsEditSplit="vertical""
 " auto-pair와 충동 해결
 let g:AutoPairsShortcutJump = ''
 let g:AutoPairsShortcutBackInsert = ''
+
 " }}}
 
 
