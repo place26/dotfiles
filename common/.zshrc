@@ -1,5 +1,10 @@
 [[ $TMUX = "" ]] && export TERM="xterm-256color"
 
+# compdef 오류가 나타나면, Zsh의 자동 완성 시스템이 올바르게 초기화되지 않았을 수 있습니다
+# .zshrc 파일의 시작 부분에 다음 명령어를 추가하여 Zsh 자동 완성 시스템을 초기화해 보세요
+autoload -Uz compinit
+compinit
+
 # zsh prompt
 # Personal prompt setting: simplicity is best
 # 참조: https://www.youtube.com/watch?v=nEvsWQrKVcQ
@@ -42,6 +47,9 @@ export LANG=en_US.UTF-8
 # wezterm을 위한 환경 설정
 PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 export PATH
+
+# MacMini : gitea를 위한 설정
+export GITEA_WORK_DIR=/usr/local/var/gitea/
 
 # keybingd for fzf : 흔히 필요로하는 기능을 keybinding을 통해 할당
 # # MacOS에서 ALT키를 사용하기 위해서는 iterm에서 preferences>profiles>keys에서 왼쪽 Option key에 대해 Esc+로 설정해야 함
@@ -210,6 +218,36 @@ source $ZSH_CUSTOM/zsh-autosuggestions/zsh-autosuggestions.zsh
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.config/zsh/zsh-syntax-highlighting
 source $ZSH_CUSTOM/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# gitea zsh_autocompletion start
+#compdef ${PROG:=gitea}
+# Heavily inspired by https://github.com/urfave/cli
+_cli_zsh_autocomplete() {
+
+  local -a opts
+  local cur
+  cur=${words[-1]}
+  if [[ "$cur" == "-"* ]]; then
+    opts=("${(@f)$(_CLI_ZSH_AUTOCOMPLETE_HACK=1 ${words[@]:0:#words[@]-1} ${cur} --generate-bash-completion)}")
+  else
+    opts=("${(@f)$(_CLI_ZSH_AUTOCOMPLETE_HACK=1 ${words[@]:0:#words[@]-1} --generate-bash-completion)}")
+  fi
+
+  if [[ "${opts[1]}" != "" ]]; then
+    _describe 'values' opts
+  else
+    _files
+  fi
+
+  return
+}
+
+if [ -z $PROG ] ; then
+  compdef _cli_zsh_autocomplete gitea
+else
+  compdef _cli_zsh_autocomplete $(basename $PROG)
+fi
+# gitea zsh_autocompletion end
+ 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
