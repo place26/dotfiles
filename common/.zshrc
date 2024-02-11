@@ -200,6 +200,7 @@ fi
 # Macpro specific
 alias syncbakcup="~/backup_script/backup_sync.sh"
 alias showshotw="~/backup_script/showshots"
+alias reversecom+="ssh -L 8484:localhost:8384 com+deliver"
 
 export ZSH_CUSTOM=$HOME/Sync/dotfiles/common/.config/zsh
 # git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.config/zsh/zsh-autosuggestions
