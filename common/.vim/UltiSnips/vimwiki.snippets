@@ -1,0 +1,124 @@
+###################################################
+#  Personal snippets for editing patients record  #
+###################################################
+snippet opnote "Operation Records" bA
+== $1 ==
+---------------------------------------------------------------------------------------------------
+*${1:Zhang_BeiBei}*  (${2:F}/${3:31})                 *OP Date* `!v strftime('%Y-%m-%d')`                        *Assistor* ${4:闫文云}
+---------------------------------------------------------------------------------------------------
+*Patient Information*
+	- 기본정보: ${5:고객 관련 기본 정보}
+	- 거주지: ${6:青岛}
+	- 보호자: ${7:가족}
+	- 咨询医生: ${8:王静}
+	- 타병원 시술이력: ${9:无}
+*OP Name*:
+	1. ${10:Face Lift}
+*OP Notes*:
+	- ${11:incision}
+	- implants: ${12:Goretex}
+	- 수술시간: ${13:1} 시간
+*Comments*:
+	- ${14:특이 사항 기록}
+	- 이전시술: ${15:Double Eyelidplasty}
+	- 사진폴더 ${16:`!v strftime('%Y-%m-%d')`}
+---------------------------------------------------------------------------------------------------
+$0
+endsnippet
+
+snippet ophead "Operation Records Header" bA
+== ${2:Zhang_BeiBei} (${3:F}/${4:31}) ==
+	*OP Date* `!v strftime('%Y-%m-%d')` | 医助 ${5:闫文云} ｜咨询医生: ${6:王静}
+	*Patient Information*
+	- 기본정보:
+		* Calendar: ${1:일정상 고객정보}
+	- 거주지: ${7:青岛} | 보호자: ${8:가족}
+	- 이전 시술이력: ${9:无}
+$0
+endsnippet
+
+snippet opfoot "Operation Record Footer" bA
+	*Comments*:
+	- 결과예측: ${1:결과 기대됨}${2:적극적인 경과관찰 필요}
+	- 지시사항: ${3:-}
+	- 사진폴더 ${4:`!v strftime('%Y-%m-%d')`}
+$0
+endsnippet
+
+snippet funote "Follow Up Records" bA
+== ${2:Zhang_BeiBei} (${3:F}/${4:31}) ==
+	*POD* ${5:7D} | 방문일 ${6:`!v strftime('%Y-%m-%d')`} | OP Date ${7:`!v strftime('%Y-%m-%d')`} | 医助 ${8:闫文云} | 咨询医生 ${9:王玲}
+	*Patient Information*
+	- Calendar: ${1:일정상 고객정보}
+	*Follow Up Records*
+	- 医助的意见: ${10:医助意见}
+	*Comments*:
+	- 특이사항: ${11}
+	- 사진폴더 $7
+$0
+endsnippet
+
+snippet desnote "Double Eyelidplasty Operation Records" bA
+	*OP Name*:
+	1. ${1:Primary}${2:Secondary}${3:Revisional} Double Eyeliplasty
+	2. Medial Epicanthoplasty: ${4:-}${5:half Z plasty}${6:skin redrape}
+	3. Lateral Epicanthoplasty: ${7:-}
+	4. Lateral Lowerlid Ression: ${8:-}
+	5. MOP: ${9:-}
+	*OP Notes*:
+	- incision: height ${10:8}mm, skin excision ${11:3}mm, lateral extension ${12:-}
+	- muscle exicision: ${13:conservatively}${14:aggressively}
+	- setpum: opend at ${15:2}mm above tarsal plate, fat excision ${16:+}
+	- muller muscle excision: ${17:3}mm
+	- anchoring: ${18:5} points, ${19:1}mm above from tarsal plate with ${20:levator completx distal end}
+	- lateral periosteal anchoring ${21:+}
+	- 수술시간: ${22:1} 시간
+	- 시술과정: ${23:계획한 대로 진행}${24:까다로웠음}
+	- 특이사항: ${25:출혈량 별로 많지 않았음}
+$0
+endsnippet
+
+snippet rhinote "Rhinoplasty Operation Records" bA
+	*OP Name*:
+	1. ${1:Primary}${2:Secondary}${3:Revisional} Augmentation Rhiniplasty
+	2. Strut: ${4:Septum}${5:Ear Cartilage}${6:Rib Cartilage}${7:MedPore}${8:Demineralized Bone}${9:Allo-Rib Cartilage Graft}
+	3. Dorsum Augmentation: ${10:Silicon}${11:Goretex}: (${12:block}${13:precarved})
+	4  Hump Reduction: ${14:-}, Lateral Osteotomy: ${15:-}
+	4. Alar Wing Reduction: ${16:-}
+	5. Foreign Body Removal: ${17:+ Resylene}
+	6. Nasal Tip Reduction: ${18:+}
+	*OP Notes*:
+	- incision: ${19:Inverted-V incision}
+	- nasal strut: ${20:left} side of septum, ${21:1} pieces
+	- spreader graft: ${22:left} side of septum, size ${237: 25 x 3}mm
+	- dome suture: ${24:+}
+	- tip graft: material ${25:septum5}, size ${26:10 x 3}mm, height ${27:3}mm
+	- other procedures: ${28:alar cartilage cephalic portion excision}
+	- 수술시간: ${29:1} 시간
+	- 시술과정: ${31:계획한 대로 진행}${32:까다로웠음}
+	- 특이사항: ${33:출혈량 별로 많지 않았음}
+$0
+endsnippet
+
+snippet fatnote "Fat Grafting Operation Records" bA
+	*OP Name*:
+	1. ${1:Primary}${2:Secondary}${3:Revisional} Fat Graft
+	2. 이식부위: ${4:지방이식 부위}
+	*OP Notes*:
+	- harvest sites: ${5:thigh} 
+	- 준비된 지방량: ${6:80}cc, 보관한 지방: ${7:30}cc
+	- 지방상태: ${8:good}
+	- 시술 시 중점 사항: ${9:고객의 요청에 따라 측두부에 중점을 둠}
+	- 수술시간: ${10:1} 시간
+	- 시술과정: ${11:계획한 대로 진행}${12:까다로웠음}
+	- 이전 주사이력 및 부위: ${13:Forehead Restylene}
+	- 특이사항: ${14}
+$0
+endsnippet
+
+snippet xph "my signature"
+xupei@me.com 
+----
+peace!
+endsnippet
+

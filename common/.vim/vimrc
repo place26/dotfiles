@@ -12,7 +12,7 @@
 " c - ciw(delete and insert mode), cw, cc(delete line and start editing)
 
 " Tab Edit:
-" :tabedit, :tabfirst, :tablast, :tabn(next), :tabp(previous),
+" :tabedit, :tabfirst, :tablast, :tabn(next), :tabp(previous), :tabnext 1(goto 1st tab)
 " :tabclose, :tabonly, gt(next tab), gT(previous tab), 2gt(second tab)
 " :mksession header-files-work.vim or :source header-files-work.vim,
 " :mks!(if changed session tab :mks! to store)
@@ -112,7 +112,7 @@ set gdefault
 set ruler laststatus=2 showcmd showmode
 set list listchars=trail:»,tab:»-
 set fillchars+=vert:\
-set wrap breakindent
+set nowrap breakindent
 set title
 set backspace=indent,start,eol                           " <BS> 역할설정, eol 제외
 set scrolloff=8                                          " during scroll keep 3 lines be shown"
@@ -131,11 +131,10 @@ augroup END
 "}}}
 
 " Custom Key Mappings: {{{
-
 " Set <leader> key to <Space>
 nnoremap <Space> <Nop>
 let mapleader=" "
-let maplocalleader=" "
+let maplocalleader=","
 
 " iPad를 위해 <ESC>를 키 매핑, 무척 편리함. set paste와 같이 쓸 경우 안됨.
 inoremap jk <ESC>
@@ -144,15 +143,16 @@ inoremap ㅓㅏ <ESC>
 noremap k gk
 noremap j gj
 
-" Terminal: i로 시작, exit로 빠져나옴
-nmap <leader>s <C-w>s<C-w>j:terminal<CR>
-nmap <leader>vs <C-w>v<C-w>l:terminal<CR>
-
-" vim-smooth-scroll : 의외로 쓸모 있음
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 20, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 20, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 20, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 20, 4)<CR>
+" ale
+if exists('g:loaded_ale')
+  call ale#linter#Define('markdown', {
+  \ 'name': 'marksman',
+  \ 'lsp': 'stdio',
+  \ 'executable': '/opt/homebrew/bin/marksma',
+  \ 'command': '%e server',
+  \ 'initialization_options': {},
+  \ })
+endif
 
 " }}}
 
@@ -161,14 +161,11 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 20, 4)<CR>
 " Navigate the complete menu items like CTRL+n / CTRL+p would.
 inoremap <expr> <Down> pumvisible() ? "<C-n>" :"<Down>"
 inoremap <expr> <Up> pumvisible() ? "<C-p>" : "<Up>"
-
 " Select the complete menu item like CTRL+y would.
 inoremap <expr> <Right> pumvisible() ? "<C-y>" : "<Right>"
 inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
-
 " Cancel the complete menu item like CTRL+e would.
 inoremap <expr> <Left> pumvisible() ? "<C-e>" : "<Left>"
-
 " }}}
 
 " Plugins Install: {{{
@@ -183,39 +180,46 @@ call plug#begin()
     " Vim Make Friendly:
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-    " Plug 'mhinz/vim-startify'               " fancy start screen for vim 
-    Plug 'terryma/vim-smooth-scroll'             " C-u(p)|d(own)|b(ack)|f(ront)
+    " Plug 'mhinz/vim-startify'                     " fancy start screen for vim 
 
     " Shell:
     Plug 'scrooloose/nerdtree'
-    Plug 'samoshkin/vim-lastplace'              " 파일을 열때 마지막 상태로 불러들임
-    Plug 'vim-scripts/CursorLineCurrentWindow'
+    Plug 'samoshkin/vim-lastplace'                  " 파일을 열때 마지막 상태로 불러들임
+    Plug 'vim-scripts/CursorLineCurrentWindow'      " cursor의 위치를 highlight로 보여줌 
 
     " Search:
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
-    Plug 'junegunn/vim-slash'                   " 검색된 결과를 강조(highlight), 커서가 벗어나면 강조해제
+    Plug 'junegunn/vim-slash'                       " 검색된 결과를 강조(highlight), 커서가 벗어나면 강조해제
 
     " GIT:
-    Plug 'tpope/vim-fugitive'                 " git plugin
-    Plug 'junegunn/gv.vim'                    " git commit browser :GV | GV! | GV?
-    Plug 'airblade/vim-gitgutter'             " show git diff in the 'gutter' (sign colume)
+    Plug 'tpope/vim-fugitive'                       " git plugin
+    Plug 'junegunn/gv.vim'                          " git commit browser :GV | GV! | GV?
+    Plug 'airblade/vim-gitgutter'                   " show git diff in the 'gutter' (sign colume)
 
     " Keyboard:
     Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-                                                " C-n | n N q, check :help visual-multi 
-    Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-surround'                   " surroundings: parentheses, brackets, quotes, XML tabs and more
-                                                " cs"'|cs'<q>|ysiw]|cs]{|yssb
-                                                " or yss)|ysiw<em>|visual mode S<p class="important">
+                                                    " C-n | n N q, check :help visual-multi 
+    Plug 'tpope/vim-commentary'                     " comment 처리
+    Plug 'tpope/vim-surround'
+        " surroundings: parentheses, brackets, quotes, XML tabs and more
+        " ys (add), ds (delete), cs (change)
+        " ysiw) --> (word), 0ys$" --> 해당라인 "" 혹은 yss"도 마찬가지결과 ex) yssb 한줄을 ()로 둘러쌈 b=brakets 
+        " cs"' : " --> '
+        " or yss)|ysiw<em>|visual mode S<p class="important">
     Plug 'jiangmiao/auto-pairs'                 " pair brackets, parens, quotes
     Plug 'vim-scripts/AutoComplPop'             " :help AutoComplPop 
     Plug 'christoomey/vim-tmux-navigator'       " navation between vim and tmux splits
+
+    " Snippets:  
     Plug 'SirVer/ultisnips'                     " <tab>,<s-tab>으로 stop간 이동
     Plug 'honza/vim-snippets'                   " 미리 설정된 snippets를 활용 가능, 마크다운도 있음
  
     "  Markdown:
-    Plug 'plasticboy/vim-markdown'              " syntax highlighting matching rules and mappings for the original Markdown and extensions
+    " Plug 'plasticboy/vim-markdown'              " syntax highlighting matching rules and mappings for the original Markdown and extensions
+    Plug 'dense-analysis/ale'
+    Plug 'MattesGroeger/vim-bookmarks'
+        " before installation, cehck :echo has('signs') 결과 1이면 OK!
 
 call plug#end()
 
@@ -246,6 +250,105 @@ xmap <Leader>l <Plug>(Limelight)
 noremap  <leader>ee :NERDTreeToggle<CR>
 nnoremap <leader>ef :NERDTreeFind<CR>
 
+" GitGutter:
+nmap <Leader>g :GitGutterToggle<CR>
+
+" Bookmars:
+" unbind the keys whenever Nerdtree becomes active
+let g:bookmark_no_default_key_mappings = 1
+function! BookmarkMapKeys()
+    nmap mm :BookmarkToggle<CR>
+    nmap mi :BookmarkAnnotate<CR>
+    nmap mn :BookmarkNext<CR>
+    nmap mp :BookmarkPrev<CR>
+    nmap ma :BookmarkShowAll<CR>
+    nmap mc :BookmarkClear<CR>
+    nmap mx :BookmarkClearAll<CR>
+    nmap mkk :BookmarkMoveUp
+    nmap mjj :BookmarkMoveDown
+endfunction
+function! BookmarkUnmapKeys()
+    unmap mm
+    unmap mi
+    unmap mn
+    unmap mp
+    unmap ma
+    unmap mc
+    unmap mx
+    unmap mkk
+    unmap mjj
+endfunction
+autocmd BufEnter * :call BookmarkMapKeys()
+autocmd BufEnter NERD_tree_* :call BookmarkUnmapKeys()
+" BookmarkSign
+highlight SignColumn ctermbg=232
+highlight BookmarkSign ctermbg=NONE ctermfg=216
+highlight BookmarkAnnotationSign ctermbg=60 ctermfg=184
+highlight BookmarkLine ctermbg=NONE ctermfg=226
+highlight BookmarkAnnotationLine ctermbg=232 ctermfg=NONE
+" bookmark와 관련된 기본 설정
+let g:bookmark_auto_save = 0
+let g:bookmark_auto_close = 1
+let g:bookmark_highlight_lines = 1
+let g:bookmakr_center = 1
+" let g:bookmark_display_annotation = 1
+" let g:bookmark_save_per_working_dir = 1
+" function! g:BMWorkDirFileLocation()
+"     return expand('~/Sync/') . '.vim-bookmarks'
+" endfunction
+let g:bookmark_auto_save = 1
+" let g:bookmark_auto_save_file = '~/Sync/.vim-bookmarks'
+
+" 아래의 AddBookmarkRoot()을 활용해 bookmarks를 한곳에서 관리하기 위함
+let s:autoload_roots = []
+let s:last_root = ''
+let s:last_file = ''
+
+function! AddBookmarkRoot(root)
+  call add(s:autoload_roots, a:root)
+endfunction!
+
+function! AutoloadBookmarks(file_name)
+  let root_is_found = 0
+  let found_root = 0
+  let name_len = strlen(a:file_name)
+
+  for root in s:autoload_roots
+    let root_len = strlen(root)
+    if (name_len > root_len && strpart(a:file_name, 0, root_len) == root)
+      let root_is_found = 1
+      let found_root = root
+      break
+    endif
+  endfor
+
+  if (root_is_found && found_root != s:last_root)
+    let s:last_file = found_root . '/.bookmarks'
+    let s:last_root = found_root
+    call BookmarkLoad(s:last_file, 0, 1)
+
+    augroup AutoSaveBookmarks
+      autocmd!
+      autocmd BufLeave * call s:remove_group()
+    augroup END
+  else
+    let s:last_root = ''
+  endif
+endfunction
+
+augroup AutoLoadBookmarks
+  autocmd!
+  autocmd BufEnter * call AutoloadBookmarks(expand("<afile>:p"))
+augroup END
+
+function! s:remove_group()
+  call BookmarkSave(s:last_file, 1)
+  augroup AutoSaveBookmarks
+    autocmd!
+  augroup END
+endfunction
+" 위에서 정의된 함수를 호출
+autocmd VimEnter * call AddBookmarkRoot('~/Sync')
 " }}}
 
 " Fzf_Settings: {{{
@@ -259,67 +362,33 @@ nnoremap <leader>fr :Rg<CR>
 " rg search result; relaunch ripgrep on every keystroke
 nnoremap <leader>fR :RG<CR>
 
-" This is the default option:
-"   - Preview window on the right with 50% width
-"   - CTRL-/ will toggle preview window.
-" - Note that this array is passed as arguments to fzf#vim#with_preview function.
-" - To learn more about preview window options, see `--preview-window` section of `man fzf`.
-" let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
+" preview windows 관련 설정
+" let g:fzf_vim.preview_window = ['hidden,right,50%,<70(up,40%)', 'ctrl-/']
 
-" command! -bang -nargs=? -complete=dir Files
-    " \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
-
-" Use preview when FzfFiles runs in fullscreen
-" command! -nargs=? -bang -complete=dir Files
-            " \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+" 사용자 정의 추가, Sync 폴더를 기준으로 검색
+command! -bang -nargs=? -complete=dir Sync 
+    \ call fzf#vim#files('~/Sync', {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
 
 " 지정한 폴더를 기준으로 file searching
-command! -bang Sync call fzf#vim#files('~/Sync', <bang>0)
-command! -bang LogSEQ call fzf#vim#grep('~/LogSEQ-EveryNotes/')
-" command! -bang MBQDPatients call fzf#vim#files('~/Pictures/QDPhotos.MBP', <bang>0)
-" command! -bang MB2TQDPatients call fzf#vim#files('/Volumes/2TSSD/QDPhotos.2TSSD', <bang>0)
-" command! -bang BCRsyncLogs call fzf#vim#files('~/Rsync/logs', <bang>0)
-
-" Mapping selecting mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
-" Insert mode completion
-imap <c-x><c-k> <plug>(fzf-complete-word)
-" imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
-" Path completion with custom source command
-inoremap <expr> <c-x><c-f> fzf#vim#complete#path('fd')
-" inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
-
-" Word completion with custom spec with popup layout option
-inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'window': { 'width': 0.2, 'height': 0.9, 'xoffset': 1 }})
-" Replace the default dictionary completion with fzf-based fuzzy completion
-" inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
+" command! -bang Sync call fzf#vim#files('~/Sync', <bang>0,)
+" command! -bang LogSEQ call fzf#vim#grep('~/LogSEQ-EveryNotes/')
+" command! -bang LogSEQ call fzf#vim#grep('ag --nocolor --nogroup ''%s'' ~/LogSEQ-EveryNotes/', 1, <bang>0, <q-args>)
 
 " }}}
 
 " Folding: {{{
-
 " 속도 문제가 발생, 파일오픈 시 unfolded로 불러들임.
 set foldenable
 set foldmethod=marker
 set foldlevelstart=2
 " set foldcolumn=1
-
 " What triggers automatic fold opening
 set foldopen-=block
 set smartindent
 set foldopen-=hor
 set foldopen+=jump
-
-" Remap because 'za' is highly inconvenient to type
-nnoremap <leader><Space> za
 " Remap folds everything all the way: fold-close-all
 nnoremap <leader>za zM
-
 " }}}
 
 " Vim Lastplace: {{{
@@ -335,9 +404,6 @@ noremap <silent> <C-j> :wincmd j<CR>
 noremap <silent> <C-h> :wincmd h<CR>
 noremap <silent> <C-l> :wincmd l<CR>
 
-" Use <Bslash> instead of <C-w>, which is tough to type
-nmap <Bslash> <C-w>
-
 " Splits: default splitabove
 set splitbelow
 set splitright
@@ -346,7 +412,9 @@ nnoremap <silent> <leader>\| :vsplit<CR>
 nnoremap <silent> <leader>0 :only<CR>
 
 " Maximize Split: Use '<C-w>=' to make window sizes equal back
-nnoremap <C-w><Bslash> <C-w>_<C-w>\|
+" <C-w>+,- : resize window (vertical), <C-w><,> : horizontal
+" :resize +N, -N
+" :vertical resize +N, -N
 
 " Tab Navigation:
 nnoremap <silent> <leader>1 :tabnext 1<CR>
@@ -360,19 +428,12 @@ nnoremap <silent> <leader>9 :tablast<CR>
 nnoremap <silent> <leader>+ :tabnew<CR>:edit .<CR>
 nnoremap <silent> <leader>) :tabonly<CR>
 nnoremap <silent> <leader>- :tabclose<CR>
-
 " }}}
 
 " Vim Commentary: {{{
 " 모든 파일 타입에 대해 <leader>c를 주석 처리 단축키로 설정
 autocmd FileType * nnoremap <buffer> <leader>c :Commentary<CR>
 autocmd FileType * vnoremap <buffer> <leader>c :Commentary<CR>
-" add comment string as filetype
-" autocmd FileType vim setlocal commentstring=\"\ %s
-" autocmd FileType apache setlocal commentstring=#\ %s
-" Comment line and move 1 line down
-nmap <silent> <leader>c <Plug>CommentaryLine :normal j<CR>
-xmap <leader>c <Plug>Commentary
 " }}}
 
 " Fugitive: {{{
@@ -419,13 +480,6 @@ nnoremap <silent> <leader>gco :Git checkout<Space>
 "
 " }}}
 
-" Vim_Markdown: {{{
-
-let g:vim_markdown_folding_disabled = 1
-
-" }}}
-
-
 " Startify: {{{
 let g:startify_custom_header = [
   \ '   ____  _ _ _                      _   _         ____  _         _ _     _      ',
@@ -461,7 +515,6 @@ function! s:sy_add_bookmark(bookmark)
   endfunction
 
 command! -nargs=1 StartifyAddBookmark call <sid>sy_add_bookmark(<q-args>)
-
 " }}}
 
 " Ultisnip: {{{
@@ -472,7 +525,7 @@ command! -nargs=1 StartifyAddBookmark call <sid>sy_add_bookmark(<q-args>)
 " <tab> if you use one of the following:
 " - https://github.com/Valloric/YouCompleteMe
 " - https://github.com/nvim-lua/completion-nvim
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandOrJumpTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " 위의 <tab>키가 다른 플러그인과 충돌할 경우 
@@ -481,8 +534,11 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 " 를 사용하는 것을 고려해 볼 수 있음, 현재 문제 없이 작동 함.
 
+autocmd FileType vimwiki,markdown exec "UltiSnipsAddFiletypes ps"
+
+
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical""
+let g:UltiSnipsEditSplit="vertical"
 
 " auto-pair와 충동 해결
 let g:AutoPairsShortcutJump = ''

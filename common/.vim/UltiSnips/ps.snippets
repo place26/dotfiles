@@ -1,0 +1,86 @@
+# vimwiki와 markdown 파일 타입에 대한 스니펫 확장
+extends vimwiki, markdown
+
+###################################################
+#  Personal snippets for editing patients record  #
+###################################################
+snippet opnote "Operation Records" bA
+---------------------------------------------------------------------------------------------------
+*${1:Zhang_BeiBei}*  (${2:F}/${3:31})                 *OP Date* `!v strftime('%Y-%m-%d')`                        *Assistor* ${4:闫文云}
+---------------------------------------------------------------------------------------------------
+*Patient Information*
+	- 기본정보: ${5:고객 관련 기본 정보}
+	- 거주지: ${6:青岛}
+	- 보호자: ${7:가족}
+	- 咨询医生: ${8:王静}
+	- 타병원 시술이력: ${9:无}
+*OP Name*:
+	1. ${10:Double Eyeliplasty}
+*OP Notes*:
+	- ${11:incision}
+	- implants: ${12:Goretex}
+	- 수술시간: ${13:1} 시간
+*Comments*:
+	- ${14:특이 사항 기록}
+	- 이전시술: ${15:Double Eyelidplasty}
+	- 사진폴더 ${16:`!v strftime('%Y-%m-%d')`}
+---------------------------------------------------------------------------------------------------
+$0
+endsnippet
+
+snippet ophead "Operation Records Header" bA
+---------------------------------------------------------------------------------------------------
+*${1:Zhang_BeiBei}*  (${2:F}/${3:31})                 *OP Date* `!v strftime('%Y-%m-%d')`                        *Assistor* ${4:闫文云}
+---------------------------------------------------------------------------------------------------
+*Patient Information*
+	- 기본정보: ${5:고객 관련 기본 정보}
+	- 거주지: ${6:青岛}
+	- 보호자: ${7:가족}
+	- 咨询医生: ${8:王静}
+	- 타병원 시술이력: ${9:无}
+$0
+endsnippet
+
+snippet desnote "Double Eyelidplasty Operation Records"
+*OP Name*:
+	1. ${1:Primary}${2:Secondary}${3:Revisional} Double Eyeliplasty
+	2. Medial Epicanthoplasty: ${4:-}${5:half Z plasty}${6:skin redrape}
+	3. Lateral Epicanthoplasty: ${7:-}
+	4. Lateral Lowerlid Ression: ${8:-}
+	5. MOP: ${9:-}
+*OP Notes*:
+	- incision: height ${10:8}mm, skin excision ${11:3}mm, lateral extension ${12:-}
+	- muscle exicision: ${13:conservatively}${14:aggressively}
+	- setpum: opend at ${15:2}mm above tarsal plate, fat excision ${16:+}
+	- muller muscle excision: ${17:3}mm
+	- anchoring: ${18:5} points, ${19:1}mm above from tarsal plate with ${20:levator completx distal end}
+	- lateral periosteal anchoring ${21:+}
+	- 수술시간: ${22:1} 시간
+	- 특이사항: ${23:출혈량 별로 많지 않았음}
+$0
+endsnippet
+
+snippet opfoot "Operation Record Footer"
+*Comments*:
+	- 결과예측: ${14:결과 기대됨}
+	- 이전시술: ${15:-}
+	- 사진폴더 ${16:`!v strftime('%Y-%m-%d')`}
+---------------------------------------------------------------------------------------------------
+$0
+endsnippet
+
+
+
+snippet funote "Follow Up Records" bA
+---------------------------------------------------------------------------------------------------
+*${1:Zhang_BeiBei}*  (${2:F}/${3:31})  *POD* # ${4:7D}      *OP Date* ${5:`!v strftime('%Y-%m-%d')`}           *Assistor* ${6:闫文云}
+---------------------------------------------------------------------------------------------------
+*Follow Up Records*
+	- ${7:치료시 특이 사항}
+*Comments*:
+	- ${8:특이 사항 기록}
+	- 사진폴더 ${9:`!v strftime('%Y-%m-%d')`}
+---------------------------------------------------------------------------------------------------
+$0
+endsnippet
+

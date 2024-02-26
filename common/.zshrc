@@ -1,6 +1,5 @@
 [[ $TMUX = "" ]] && export TERM="xterm-256color"
 
-# zsh prompt
 # Personal prompt setting: simplicity is best
 # 참조: https://www.youtube.com/watch?v=nEvsWQrKVcQ
 # use git status info : git 설치 필요
@@ -9,7 +8,6 @@ precmd() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 
 zstyle ':vcs_info:git:*' formats 'on branch %b '
-# zstyle ':vcs_info:git*' formats "%{$fg[grey]%}%s %{$reset_color%}%r/%S%{$fg[grey]%} %{$fg[blue]%}%b%{$reset_color%}%m%u%c%{$reset_color%} "
 setopt PROMPT_SUBST
 
 PROMPT='%F{117}%n%f  %F{221}%m%f   %F{038}${PWD/#$HOME/~}%f ${vcs_info_msg_0_}
@@ -40,8 +38,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 # wezterm을 위한 환경 설정
-PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
-export PATH
+export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 
 # MacMini : gitea를 위한 설정
 export GITEA_WORK_DIR=/usr/local/var/gitea/
@@ -50,78 +47,32 @@ export GITEA_WORK_DIR=/usr/local/var/gitea/
 export HOMEBREW_SERVICES_NO_DOMAIN_WARNING=1
 export HOMEBREW_NO_ENV_HINTS=1
 
-# keybingd for fzf : 흔히 필요로하는 기능을 keybinding을 통해 할당
-# # MacOS에서 ALT키를 사용하기 위해서는 iterm에서 preferences>profiles>keys에서 왼쪽 Option key에 대해 Esc+로 설정해야 함
-bindkey '^[d' cd_with_fzf
-bindkey '^o' open_with_fzf
-bindkey '^[p' open_ps_fzf
-bindkey '^[o' open_pages_fzf
-
-# exclude 폴더 설정
-export Exclude_Folders="-E Library -E Pictures -E Applications -E Movies -E Music -E *.tar.gz -E *.tar -E PS -E *.pages"
-
-# 별로 사용하지 않는 기능, fzf에서 기본적으로 ALT_C 조합을 지원하나 하위 폴더만을 검색 
-# # ALT_D는 우선 홈으로 이동 후 검색
-cd_with_fzf() {
-    cd $HOME && cd "$(fd -t d -H -E Library | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" && echo "$PWD" && tree -L 2
-}
-
-# fzf과 bat을 이용해 파일 내용을 미리 보고 open할 수 있는 기능
-# --search-path 옵션 추가
-open_with_fzf() {
-    # Documents, Sync 폴더 검색 bat 활용, obsidian fd 참조
-    # -a = --absolut-path
-    cd $HOME && fd -a -tf -H $Exclude_Folders | fzf -m --preview='bat --style=numbers --color=always {}' --preview-window=right:70%:wrap --bind='enter:execute(vim {+} < /dev/tty)'
-}
-
-# 아래 두가지 중 환경에 맞게 사용
-# ALT_P키로 환자의 이름이나 촬영날짜에 해당하는 폴더로 이동이 가능
-# 폴더에서 Finder를 열려면 open . 명형어를 입력
-# 검색된 해당폴더로 이동을 위해 미리 huahan 폴더로 이동
-# MacPro
-open_ps_fzf() {
-    # cd /Volumes/12THDD/huahan/ && fd -t d -E 'SynologyDrive' | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden --bind='enter:execute(imgcat {+} < /dev/tty)'
-    cd /Volumes/12THDD/huahan/ && cd "$(fd -t d -E 'SynologyDrive' | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" && echo "$PWD" && tree -L 2
-}
-
-# mb16
-# open_ps_fzf() {
-#     cd /Users/xupei/PS/ && cd "$(fd -t d | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)" 2>&-
-# }
-
-# iCloud/Share에서 공유되고 있는 환자 수술/치료기록 파일을 검색하여 pages로 열기
-open_pages_fzf() {
-    cd /Users/xupei/Library/Mobile\ Documents/com~apple~CloudDocs/Share && open "$( fd -td | fzf )"
-}
-
-zle -N cd_with_fzf
-zle -N open_with_fzf
-zle -N open_ps_fzf
-zle -N open_pages_fzf
 
 # --------------#
 # fzf 관련 설정 #
 # --------------#
-export FD_OPTIONS="--follow --hidden --exclude .git --exclude Library --exclude node_modules --ignore-file .gitignore"
-export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix -H --follow -E .git -E .DS_Store'
-export FZF_DEFAULT_OPTS="--height 60% --layout reverse --info inline --border \
-    --preview 'bat -n --color=always {}' --preview-window up,15,border-horizontal \
-    --bind 'ctrl-/:change-preview-window(80%|hidden|)'"
+export FD_OPTIONS="--follow --hidden --exclude .git --exclude Library --exclude node_modules"
+export FZF_CTRL_T_COMMAND="fd -tf -H --follow -E .git -E .DS_Store -E Library -E Pictures -E Music -E Applications . '/Users/xupei'"
+export FZF_DEFAULT_OPTS="--height 60% --border --info inline --layout reverse
+    --preview 'bat -n --color=always {}'
+    --bind 'ctrl-/:change-preview-window(right,90%|down,60%,border-horizontal|hidden|)'"
 
 # OPTION_C : cd into the selected directory - 매우 유용한 기능
 # MacOS에서 ALT_C를 이용하기 위해서는 iTerm 옵션 수정해야 함
 # iTerm>Preferences>Profiles>Keys>General>Left Option Key --> Esc+ 선택
-export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
+export FZF_ALT_C_COMMAND="fd -td -H --follow -E .git -E node_modules . '/Users/xupei'"
 # Print tree structure in the preview window
 export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
 # preview windwos : 위쪽, 15 라인, horizontal
-export FZF_CTRL_T_COMMAND="fd $FD_DEFAULT_OPTS"
-export FZF_CTRL_T_OPTS="
+export FZF_CTRL_T_COMMAND="fd -tf -H --follow -E .git -E .DS_Store . '/Users/xupei'"
+export FZF_CTRL_T_OPTS="--height 70% --multi --info inline --border --layout reverse
   --preview 'bat -n --color=always {}'
-  --preview-window up,15,border-horizontal
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+  --preview-window 'right,40%,border-left'
+  --header 'Tab - 복수선택'
+  --bind 'ctrl-v:become(vim {})'
+  --bind 'ctrl-/:change-preview-window(right,90%|down,60%,border-horizontal|hidden|)'"
 
 # CTRL-/ to toggle small preview window to see the full command
 # CTRL-Y to copy the command into clipboard using pbcopy
@@ -129,8 +80,7 @@ export FZF_CTRL_R_OPTS="
   --preview 'echo {}' --preview-window up:1:hidden:wrap
   --bind 'ctrl-/:toggle-preview'
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
-  --color header:italic
-  --header 'Press CTRL-Y to copy command into clipboard'"
+  --header '사용한 명령리스트| Press CTRL-Y to copy command into clipboard'"
 
 # Use ~~ as the trigger sequence instead of the default **
 export FZF_COMPLETION_TRIGGER='~~'
@@ -184,30 +134,12 @@ if [[ -n "$SSH_CONNECTION" ]]; then
   export PINENTRY_USER_DATA="USE_CURSES=1"
 fi
 
-# For MacOS show/hide hidden files
-alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
-# alias vim=nvim
-alias rmds='fd -H '^\.DS_Store$' -tf -X rm'
-# alias ll='exa -1lagh --sort modified --sort extension --group-directories-first --icons'
-# alias ld='exa -1lgh --sort modified --sort extension --group-directories-first --icons'
-# alias ls=exa
-alias ll='lsd -ASX1hl --group-dirs=first --icon auto'
-alias ld='lsd -tXh1l --git --icon auto'
-
-# wether forecast with curl
-alias weather='curl wttr.in/qindao'
-
 # for vim supporting python3, brew를 사용하여 설치 함
 # 맥에서 기본 설치된 vim이 아닌 brew로 설치한 vim을 사용하도록 함
 if (command -v brew && brew list --formula | grep -c vim ) > /dev/null 2>&1; then
     alias vim="$(brew --prefix vim)/bin/vim"
 fi
 
-# Macpro specific
-alias syncbakcup="~/backup_script/backup_sync.sh"
-alias showshotw="~/backup_script/showshots"
-alias reversecom+="ssh -L 8484:localhost:8384 com+deliver"
 
 export ZSH_CUSTOM=$HOME/Sync/dotfiles/common/.config/zsh
 # git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.config/zsh/zsh-autosuggestions
@@ -217,6 +149,7 @@ source $ZSH_CUSTOM/zsh-autosuggestions/zsh-autosuggestions.zsh
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.config/zsh/zsh-syntax-highlighting
 source $ZSH_CUSTOM/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+source /Users/xupei/Sync/dotfiles/common/.config/zsh/aliases.zsh
 eval "$(zoxide init zsh)"
 # eval "$(starship init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
